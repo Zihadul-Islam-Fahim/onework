@@ -68,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 color: Colors.black),
                           ),
                           SizedBox(
-                            height: size.height * 0.05,
+                            height: size.height * 0.03,
                           ),
                           TextFormField(
                             controller: _emailTEControlller,
@@ -119,7 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           SizedBox(
-                            height: size.height * 0.02,
+                            height: size.height * 0.01,
                           ),
                           GetBuilder<LoginController>(builder: (controller) {
                             return SizedBox(

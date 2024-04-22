@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 import 'package:onework2/data/utilities/style.dart';
+import 'package:onework2/ui/screens/apply_screen.dart';
+import 'package:onework2/ui/screens/user_profile_screen.dart';
 import 'package:onework2/ui/widgets/banner_carousel.dart';
 import 'package:onework2/ui/widgets/servicesSizedBox.dart';
 
@@ -21,7 +25,9 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.orangeAccent,
-        onPressed: () {},
+        onPressed: () {
+          Get.to(()=> const ApplyScreen());
+        },
         child: const Icon(
           Icons.add,
           size: 40,
@@ -34,10 +40,10 @@ class _HomeScreenState extends State<HomeScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const Row(
+                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Column(
+                    const Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
@@ -61,9 +67,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ],
                     ),
-                    CircleAvatar(
-                      backgroundImage:
-                          AssetImage("assets/images/avaterImage.png"),
+                    GestureDetector(
+                      onTap: (){
+                        Get.to(()=> const UserProfileScreen());
+                      },
+                      child: const CircleAvatar(
+                        backgroundImage:
+                            AssetImage("assets/images/avaterImage.png"),
+                      ),
                     )
                   ],
                 ),

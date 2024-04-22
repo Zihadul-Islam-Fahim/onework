@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:onework2/data/controller/bottom_nav_controller.dart';
-import 'package:onework2/ui/screens/business_area_screen.dart';
 import 'package:onework2/ui/screens/contact_screen.dart';
 import 'package:onework2/ui/screens/home_screen.dart';
 import 'package:onework2/ui/screens/inbox_screen.dart';

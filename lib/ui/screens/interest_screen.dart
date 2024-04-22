@@ -24,86 +24,86 @@ class InterestScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
           child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                backButton(),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      margin: const EdgeInsets.all(2),
-                      height: Get.height * 0.007,
-                      width: Get.width * 0.08,
-                      decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(14)),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.all(4),
-                      height: Get.height * 0.007,
-                      width: Get.width * 0.08,
-                      decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(14)),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.all(4),
-                      height: Get.height * 0.007,
-                      width: Get.width * 0.08,
-                      decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(14)),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.all(4),
-                      height: Get.height * 0.007,
-                      width: Get.width * 0.08,
-                      decoration: BoxDecoration(
-                          color: Colors.grey[400],
-                          borderRadius: BorderRadius.circular(14)),
-                    ),
+                    backButton(),
+                    Row(
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.all(2),
+                          height: Get.height * 0.007,
+                          width: Get.width * 0.08,
+                          decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(14)),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.all(4),
+                          height: Get.height * 0.007,
+                          width: Get.width * 0.08,
+                          decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(14)),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.all(4),
+                          height: Get.height * 0.007,
+                          width: Get.width * 0.08,
+                          decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(14)),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.all(4),
+                          height: Get.height * 0.007,
+                          width: Get.width * 0.08,
+                          decoration: BoxDecoration(
+                              color: Colors.grey[400],
+                              borderRadius: BorderRadius.circular(14)),
+                        ),
+                      ],
+                    )
                   ],
+                ),
+                SizedBox(
+                  height: Get.height * 0.02,
+                ),
+                const Text(
+                  "What are you are interested ",
+                  style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'poppins',
+                      color: Colors.black),
+                ),
+                const Text(
+                  "Personalized support throughout your journey.",
+                  style: TextStyle(
+                      fontSize: 13, fontFamily: 'poppins', color: Colors.black),
+                ),
+                SizedBox(
+                  height: Get.height * 0.02,
+                ),
+                Expanded(
+                  child: GridView.builder(
+                      itemCount: interestList.length,
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 8,
+                          mainAxisSpacing: 8),
+                      itemBuilder: (context, i) {
+                        return applyImageContainer(
+                            interestList[i]['Image']!, interestList[i]["Name"]!);
+                      }),
                 )
               ],
             ),
-            SizedBox(
-              height: Get.height * 0.02,
-            ),
-            const Text(
-              "What are you are interested ",
-              style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'poppins',
-                  color: Colors.black),
-            ),
-            const Text(
-              "Personalized support throughout your journey.",
-              style: TextStyle(
-                  fontSize: 13, fontFamily: 'poppins', color: Colors.black),
-            ),
-            SizedBox(
-              height: Get.height * 0.02,
-            ),
-            Expanded(
-              child: GridView.builder(
-                  itemCount: interestList.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 8,
-                      mainAxisSpacing: 8),
-                  itemBuilder: (context, i) {
-                    return applyImageContainer(
-                        interestList[i]['Image']!, interestList[i]["Name"]!);
-                  }),
-            )
-          ],
-        ),
-      )),
+          )),
     );
   }
 }

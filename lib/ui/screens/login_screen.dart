@@ -118,9 +118,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                           ),
-                          SizedBox(
-                            height: size.height * 0.01,
-                          ),
+                         
                           GetBuilder<LoginController>(builder: (controller) {
                             return SizedBox(
                               height: size.height * 0.06,

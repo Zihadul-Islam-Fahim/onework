@@ -37,6 +37,7 @@ class BusinessAreaController extends GetxController {
             backgroundColor: Colors.red, colorText: Colors.white);
         inProgress = false;
         update();
+
       }
     }catch(e){
       Get.snackbar('Something went wrong!', e.toString(),

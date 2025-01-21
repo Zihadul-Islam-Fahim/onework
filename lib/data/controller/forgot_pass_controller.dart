@@ -9,12 +9,12 @@ import 'package:onework2/data/utilities/urls.dart';
 import '../models/userModel.dart';
 import 'auth_controller.dart';
 
-class SignupController extends GetxController{
+class ForgotPassController extends GetxController{
 
   bool inProgress = false;
-  UserModel userModel =UserModel();
 
-  Future<bool> signup(String name,String email,String phone,String password) async {
+
+  Future<bool> sendOTP(String name,String email,String phone,String password) async {
     inProgress =true;
     update();
 
@@ -33,8 +33,7 @@ class SignupController extends GetxController{
 
         final NetworkResponse userResponse = await NetworkCaller().getRequest(Urls.user,token: token);
         if(userResponse.isSuccess){
-          userModel = UserModel.fromJson(userResponse.responseData);
-          AuthController().saveUserInformation(token, userModel);
+
         }else{
 
         }
@@ -60,6 +59,6 @@ class SignupController extends GetxController{
     }
 
 
-    }
+  }
 
 }

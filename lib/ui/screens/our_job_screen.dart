@@ -22,49 +22,53 @@ class _OurJobScreenState extends State<OurJobScreen> {
             child: Column(
               children: [
                 Text(
-                  'Les métiers Onework dans la grande distribution',
+                  'Onework professions in mass distribution',
                   textAlign: TextAlign.start,
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 SizedBox(
                   height: Get.height * 0.02,
                 ),
-                applyImageContainer("assets/images/meat.jpeg", 'Boucher(ère)'),
+                applyImageContainer("assets/images/meat.jpeg", 'Butcher'),
                 SizedBox(
                   height: Get.height * 0.04,
                 ),
                 applyImageContainer(
-                    "assets/images/baker.jpeg", 'boulanger(ère)'),
+                    "assets/images/baker.jpeg", 'Baker'),
                 SizedBox(
                   height: Get.height * 0.04,
                 ),
                 applyImageContainer(
-                    "assets/images/cake.jpeg", 'Pâtissier(ère)'),
+                    "assets/images/cake.jpeg", 'Pastry chef'),
+                SizedBox(
+                  height: Get.height * 0.04,
+                ),applyImageContainer(
+                    "assets/images/fish.jpeg", 'Fisher Maker'),
                 SizedBox(
                   height: Get.height * 0.04,
                 ),
                 applyImageContainer("assets/images/carcutarie.jpeg",
-                    'Vendeur(euse) charcuterie'),
+                    'Charcuterie seller'),
                 SizedBox(
                   height: Get.height * 0.04,
                 ),
                 applyImageContainer(
-                    "assets/images/cheese.jpeg", 'Vendeur(euse) charcuterie'),
+                    "assets/images/cheese.jpeg", 'Salesman fromagerie'),
                 SizedBox(
                   height: Get.height * 0.04,
                 ),
                 applyImageContainer(
-                    "assets/images/employee.jpg", 'Vendeur(euse) charcuterie'),
+                    "assets/images/employee.jpg", 'Shopkeeper'),
                 SizedBox(
                   height: Get.height * 0.04,
                 ),
                 applyImageContainer(
-                    "assets/images/manager.jpeg", 'Vendeur(euse) charcuterie'),
+                    "assets/images/manager.jpeg", 'Ray Manager'),
                 SizedBox(
                   height: Get.height * 0.04,
                 ),
                 applyImageContainer(
-                    "assets/images/cashier.jpeg", 'Vendeur(euse) charcuterie'),
+                    "assets/images/cashier.jpeg", 'Biller'),
               ],
             ),
           ),

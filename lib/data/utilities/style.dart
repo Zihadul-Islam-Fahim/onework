@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:onework2/data/controller/apply_controller.dart';
 import 'package:onework2/data/controller/business_area_controller.dart';
+import 'package:onework2/data/controller/category_controller.dart';
+import 'package:onework2/data/models/category_model.dart';
 import 'package:onework2/data/models/person_model.dart';
 
 DecoratedBox businessAreaDropDownDecoratedBox(
-    {required BusinessAreaController controller,
-    required String currentValue,
-    required List<String> valueList}) {
+    {required CategoryController controller,
+    required Category currentValue,
+    required List<Category> valueList}) {
   return DecoratedBox(
     decoration: BoxDecoration(
         color: Colors.grey[100], borderRadius: BorderRadius.circular(12)),
@@ -15,16 +17,16 @@ DecoratedBox businessAreaDropDownDecoratedBox(
       icon: const Icon(Icons.keyboard_arrow_down),
       isExpanded: true,
       underline: const SizedBox(),
-      items: valueList.map((String items) {
+      items: valueList.map((Category items) {
         return DropdownMenuItem(
           value: items,
           child: Text(
-            items,
+            items.name!,
             style: const TextStyle(fontFamily: 'Poppins'),
           ),
         );
       }).toList(),
-      onChanged: (String? newValue) {
+      onChanged: ( newValue) {
         controller.dropDownOnChanged(newValue);
       },
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
@@ -33,9 +35,9 @@ DecoratedBox businessAreaDropDownDecoratedBox(
 }
 
 DecoratedBox onTapDropDownDecoratedBox(
-    {required ApplyController controller,
-    required String currentValue,
-    required List<String> valueList}) {
+    {required CategoryController controller,
+    required Category currentValue,
+    required List<Category> valueList}) {
   return DecoratedBox(
     decoration: BoxDecoration(
         color: Colors.grey[100], borderRadius: BorderRadius.circular(12)),
@@ -44,16 +46,16 @@ DecoratedBox onTapDropDownDecoratedBox(
       icon: const Icon(Icons.keyboard_arrow_down),
       isExpanded: true,
       underline: const SizedBox(),
-      items: valueList.map((String items) {
+      items: valueList.map((Category items) {
         return DropdownMenuItem(
           value: items,
           child: Text(
-            items,
+            items.name ?? "",
             style: const TextStyle(fontFamily: 'Poppins'),
           ),
         );
       }).toList(),
-      onChanged: (String? newValue) {
+      onChanged: ( newValue) {
         controller.dropDownOnChanged(newValue);
       },
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
@@ -65,30 +67,30 @@ List<Person> carouselImageList = [
   Person(
       imagePath: 'assets/images/sarah adel.png',
       des:
-          "“Les consultants Onework m'ont accompagné tout au long de ma recherche de mission”",
+          "“Onework consultants supported me throughout my mission search”",
       name: "Sarah Adel",
-      designation: "Hôtesse de caisse"),
+      designation: "Cashier"),
   Person(
       imagePath: "assets/images/thomas tran.png",
-      des: "“Une vraie étude de mes besoins et un suivi personnalisé”",
+      des: "“A real study of my needs and personalized follow-up”",
       name: "Thomas Tran",
-      designation: "Boulanger"),
+      designation: "Baker"),
   Person(
       imagePath: "assets/images/sarah blouse.png",
-      des: "“Consultants toujours disponibles et à l'écoute en cas de besoin,”",
+      des: "“Consultants always available and available when needed”",
       name: "Sarah Blaus",
-      designation: "Employée de rayon"),
+      designation: "Department employee"),
   Person(
       imagePath: "assets/images/Rayan Kacim.png",
       des:
-          "“Une étude personnalisée et des propositions adaptées à mon profil”",
+          "“A personalized study and proposals adapted to my profile”",
       name: "Ryan Kacim",
-      designation: "Pâtissière"),
+      designation: "Pastry chef"),
   Person(
       imagePath: "assets/images/victor perqioter.png",
-      des: "“Une approche centrée sur l'étude des profils et de leurs besoins”",
+      des: "“An approach centered on the study of profiles and their needs”",
       name: "Victor Pesquier",
-      designation: "Responsable de rayon")
+      designation: "Department Manager")
 ];
 
 

@@ -13,34 +13,19 @@ class ApplyController extends GetxController {
   File? file;
   String? cv;
   String? fileInBase64;
-  List<String> catrgoryList = [
-    'Quel type de contrat vous intéresse ?',
-    "Boucherie",
-    'Boulangerie',
-    "Posspmmeroe",
-    "Charcuterie",
-    'Fromagierie',
-    "Responsale de rayon",
-    'Cassie'
-  ];
-  String currentValue = 'Quel type de contrat vous intéresse ?';
-
-  dropDownOnChanged(newValue) {
-    currentValue = newValue;
-    update();
-  }
 
 
-  pickFile()async{
-    FilePickerResult? result =
-    await FilePicker.platform.pickFiles(
+
+
+  pickFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['pdf'],
     );
 
     if (result != null) {
-        hasCV = true;
-        update();
+      hasCV = true;
+      update();
       file = File(result.files.single.path!);
     } else {}
   }
@@ -51,7 +36,7 @@ class ApplyController extends GetxController {
     update();
 
     try {
-    if (file != null) {
+      if (file != null) {
         List<int> cvFile = await file!.readAsBytes();
         fileInBase64 = base64Encode(cvFile);
         cv = fileInBase64;
@@ -63,12 +48,12 @@ class ApplyController extends GetxController {
         "fullName": fullName,
         "email": email,
         "phone": phone,
-        "type": currentValue,
+       // "type": currentValue,
         "aboutProject": aboutProject
       };
 
       NetworkResponse response =
-          await NetworkCaller().postRequest(Urls.apply, body: inputParams);
+          await NetworkCaller().postRequest(Urls.candidatesApply, body: inputParams);
       if (response.isSuccess) {
         inProgress = false;
         update();
@@ -90,9 +75,8 @@ class ApplyController extends GetxController {
     }
   }
 
-  onFinished()async{
-   currentValue =
-    'Quel type de contrat vous intéresse ?';
+  onFinished() async {
+   // currentValue = 'What type of contract are you interested in?';
     file = null;
     hasCV = false;
     update();

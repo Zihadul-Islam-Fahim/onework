@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:onework2/data/controller/login_controller.dart';
 import 'package:onework2/data/utilities/style.dart';
+import 'package:onework2/ui/screens/auth/otp_verify_screen.dart';
 
 class ForgotPassScreen extends StatefulWidget {
   const ForgotPassScreen({super.key});
@@ -95,6 +96,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                                     child: ElevatedButton(
                                       onPressed: () async {
                                         if(_formKey.currentState!.validate()){
+                                          Get.to(()=> const OtpVerifyScreen());
                                           mySnackbar(context, "4 digit pin sent to your email address");
                                         }
 

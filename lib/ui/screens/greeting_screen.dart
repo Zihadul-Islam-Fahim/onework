@@ -61,6 +61,9 @@ class GreetingScreen extends StatelessWidget {
                         "Let's Get Start",
                         style: TextStyle(
                           color: Colors.black,
+                          fontFamily: 'poppins',
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold
                         ),
                       ),
                     ),

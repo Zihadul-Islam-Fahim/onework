@@ -1,7 +1,14 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:onework2/app.dart';
 
-void main() {
+import 'firebase_options.dart';
+
+
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const OneWorkApp());
+  await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform
+  );
+  runApp( const OneWorkApp () );
 }

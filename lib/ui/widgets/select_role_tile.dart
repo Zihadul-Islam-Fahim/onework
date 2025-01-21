@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:onework2/ui/screens/business_area_screen.dart';
 import 'package:onework2/ui/screens/identify_screen.dart';
 import 'package:onework2/ui/screens/interest_screen.dart';
 
-InkWell selectRoleTile(bool isIdentify,IconData icon, String title, String des,) {
+InkWell selectRoleTile(bool isIdentify, IconData icon, String title, String des,
+    {bool isBusiness = false}) {
   return InkWell(
     onTap: () {
-      if(isIdentify){
-        Get.to(()=>const IdentifyScreen() );
-      }else{
-        Get.to(()=>  InterestScreen());
+      if (isIdentify) {
+        Get.to(() => IdentifyScreen());
+      } else {
+        isBusiness
+            ? Get.to(() => const BusinessAreaScreen())
+            : Get.to(() =>  InterestScreen());
       }
-
     },
     child: SizedBox(
       width: double.infinity,
-
       child: Row(
         children: [
           Expanded(
@@ -45,7 +47,10 @@ InkWell selectRoleTile(bool isIdentify,IconData icon, String title, String des,)
                 ),
                 Text(
                   des,
-                  style: const TextStyle(fontSize: 12, color: Colors.black),
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: Colors.black,
+                  ),
                 )
               ],
             ),

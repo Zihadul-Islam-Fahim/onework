@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:onework2/ui/screens/auth/signup_screen.dart';
 
-import 'package:onework2/data/controller/login_controller.dart';
-import 'package:onework2/ui/screens/forgot_pass_screen.dart';
+
 import 'package:onework2/ui/screens/greeting_screen.dart';
-import 'package:onework2/ui/screens/signup_screen.dart';
+
+import '../../../data/controller/login_controller.dart';
+import 'forgot_pass_screen.dart';
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -17,6 +20,9 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailTEControlller = TextEditingController();
   final TextEditingController _passwordTEControlller = TextEditingController();
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -43,12 +49,15 @@ class _LoginScreenState extends State<LoginScreen> {
                       borderRadius: BorderRadius.vertical(
                         top: Radius.circular(40),
                       )),
-                  child: Form(
-                    key: _formKey,
-                    child: SingleChildScrollView(
+                  child: SingleChildScrollView(
+                    child: Form(
+                      key: _formKey,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          SizedBox(
+                            height: size.height * 0.035,
+                          ),
                           const Text(
                             "Hi, Welcome Back",
                             style: TextStyle(
@@ -68,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 color: Colors.black),
                           ),
                           SizedBox(
-                            height: size.height * 0.03,
+                            height: size.height * 0.035,
                           ),
                           TextFormField(
                             controller: _emailTEControlller,
@@ -82,7 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 hintText: 'Email Address'),
                           ),
                           SizedBox(
-                            height: size.height * 0.015,
+                            height: size.height * 0.035,
                           ),
                           TextFormField(
                             controller: _passwordTEControlller,
@@ -118,7 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                           ),
-                         
+
                           GetBuilder<LoginController>(builder: (controller) {
                             return SizedBox(
                               height: size.height * 0.06,

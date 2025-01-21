@@ -23,14 +23,14 @@ class IdentifyScreen extends StatelessWidget {
                     backButton(),
                     Row(
                       children: [
-                        Container(
-                          margin: const EdgeInsets.all(2),
-                          height: Get.height * 0.007,
-                          width: Get.width * 0.08,
-                          decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.circular(14)),
-                        ),
+                        // Container(
+                        //   margin: const EdgeInsets.all(2),
+                        //   height: Get.height * 0.007,
+                        //   width: Get.width * 0.08,
+                        //   decoration: BoxDecoration(
+                        //       color: Colors.black,
+                        //       borderRadius: BorderRadius.circular(14)),
+                        // ),
                         Container(
                           margin: const EdgeInsets.all(4),
                           height: Get.height * 0.007,
@@ -79,7 +79,7 @@ class IdentifyScreen extends StatelessWidget {
                   height: Get.height * 0.02,
                 ),
                 selectRoleTile(false,Icons.shopping_bag, 'Business Area',
-                    "Onework processes your requests as quickly as possible"),
+                    "Onework processes your requests as quickly as possible",isBusiness: true),
                 SizedBox(
                   height: Get.height * 0.02,
                 ),

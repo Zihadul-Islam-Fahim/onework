@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:onework2/data/controller/signup_controller.dart';
+import 'package:onework2/ui/screens/greeting_screen.dart';
 
 import 'login_screen.dart';
 
@@ -13,9 +14,10 @@ class SignupScreen extends StatefulWidget {
 
 class _SignupScreenState extends State<SignupScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _nameTEControlller = TextEditingController();
-  final TextEditingController _emailTEControlller = TextEditingController();
-  final TextEditingController _passwordTEControlller = TextEditingController();
+  final TextEditingController _nameTEController = TextEditingController();
+  final TextEditingController _emailTEController = TextEditingController();
+  final TextEditingController _phoneTEController = TextEditingController();
+  final TextEditingController _passwordTEController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +38,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 child: Container(
                   width: double.infinity,
                   padding:
-                  const EdgeInsets.symmetric(vertical: 35, horizontal: 14),
+                      const EdgeInsets.symmetric(vertical: 35, horizontal: 14),
                   decoration: const BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.vertical(
@@ -70,19 +72,19 @@ class _SignupScreenState extends State<SignupScreen> {
                             height: size.height * 0.05,
                           ),
                           TextFormField(
-                            controller: _nameTEControlller,
+                            controller: _nameTEController,
                             validator: (String? v) {
                               if (v!.isEmpty) {
                                 return "enter name";
                               }
                             },
-                            decoration: const InputDecoration(
-                                hintText: 'Name'),
-                          ), SizedBox(
+                            decoration: const InputDecoration(hintText: 'Name'),
+                          ),
+                          SizedBox(
                             height: size.height * 0.015,
                           ),
                           TextFormField(
-                            controller: _emailTEControlller,
+                            controller: _emailTEController,
                             keyboardType: TextInputType.emailAddress,
                             validator: (String? v) {
                               if (v!.isEmpty) {
@@ -91,12 +93,25 @@ class _SignupScreenState extends State<SignupScreen> {
                             },
                             decoration: const InputDecoration(
                                 hintText: 'Email Address'),
+                          ), SizedBox(
+                            height: size.height * 0.015,
+                          ),
+                          TextFormField(
+                            controller: _phoneTEController,
+                            keyboardType: TextInputType.phone,
+                            validator: (String? v) {
+                              if (v!.isEmpty) {
+                                return "enter phone";
+                              }
+                            },
+                            decoration: const InputDecoration(
+                                hintText: 'Phone Number'),
                           ),
                           SizedBox(
                             height: size.height * 0.015,
                           ),
                           TextFormField(
-                            controller: _passwordTEControlller,
+                            controller: _passwordTEController,
                             obscureText: true,
                             validator: (String? v) {
                               if (v!.isEmpty) {
@@ -104,42 +119,47 @@ class _SignupScreenState extends State<SignupScreen> {
                               }
                             },
                             decoration:
-                            const InputDecoration(hintText: 'Password'),
+                                const InputDecoration(hintText: 'Password'),
                           ),
                           SizedBox(
-                            height: size.height * 0.02,
+                            height: size.height * 0.035,
                           ),
-                          GetBuilder<SignupController>(
-                            builder: (controller) {
-                              return SizedBox(
-                                height: size.height * 0.06,
-                                width: double.infinity,
-                                child: Visibility(
-                                  visible: controller.inProgress==false,
-                                  replacement:  Center(child: CircularProgressIndicator(color: Colors.orange.shade200),),
-                                  child: ElevatedButton(
-                                    onPressed: () async {
-                                      if (_formKey.currentState!.validate()) {
-                                        bool result = await controller.signup(_nameTEControlller.text,_emailTEControlller.text, _passwordTEControlller.text);
-                                        if(result){
-                                          Get.to(()=>const LoginScreen());
-                                        }
+                          GetBuilder<SignupController>(builder: (controller) {
+                            return SizedBox(
+                              height: size.height * 0.06,
+                              width: double.infinity,
+                              child: Visibility(
+                                visible: controller.inProgress == false,
+                                replacement: Center(
+                                  child: CircularProgressIndicator(
+                                      color: Colors.orange.shade200),
+                                ),
+                                child: ElevatedButton(
+                                  onPressed: () async {
+                                    if (_formKey.currentState!.validate()) {
+                                      bool result = await controller.signup(
+                                          _nameTEController.text,
+                                          _emailTEController.text,
+                                          _phoneTEController.text,
+                                          _passwordTEController.text);
+                                      if (result) {
+                                        Get.to(() => const GreetingScreen());
                                       }
-                                    },
-                                    child: const Text(
-                                      'Sign up',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.black,
-                                        fontFamily: 'poppins',
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                    }
+                                  },
+                                  child: const Text(
+                                    'Sign up',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.black,
+                                      fontFamily: 'poppins',
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ),
-                              );
-                            }
-                          ),
+                              ),
+                            );
+                          }),
                           SizedBox(
                             height: size.height * 0.01,
                           ),

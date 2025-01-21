@@ -13,10 +13,10 @@ class InterestScreen extends StatelessWidget {
     {"Image": "assets/images/fish.jpeg", "Name": 'Fishmonger'},
     {"Image": "assets/images/carcutarie.jpeg", "Name": 'Carcutarie Seller'},
     {"Image": "assets/images/cheese.jpeg", "Name": 'Boucher'},
-    {"Image": "assets/images/employee.jpg", "Name": 'Boucher'},
-    {"Image": "assets/images/manager.jpeg", "Name": 'Boucher'},
-    {"Image": "assets/images/cashier.jpeg", "Name": 'Boucher'},
-    {"Image": "assets/images/meat.jpeg", "Name": 'Boucher'},
+    {"Image": "assets/images/employee.jpg", "Name": 'Shopkeeper'},
+    {"Image": "assets/images/manager.jpeg", "Name": 'Shopkeeper'},
+    {"Image": "assets/images/cashier.jpeg", "Name": 'Biller'},
+
   ];
 
   @override
@@ -34,14 +34,7 @@ class InterestScreen extends StatelessWidget {
                     backButton(),
                     Row(
                       children: [
-                        Container(
-                          margin: const EdgeInsets.all(2),
-                          height: Get.height * 0.007,
-                          width: Get.width * 0.08,
-                          decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.circular(14)),
-                        ),
+
                         Container(
                           margin: const EdgeInsets.all(4),
                           height: Get.height * 0.007,

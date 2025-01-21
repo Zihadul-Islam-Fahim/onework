@@ -1,6 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:onework2/data/controller/contact_controller.dart';
+
+import '../widgets/contact_cart.dart';
 
 class ContactScreen extends StatefulWidget {
   const ContactScreen({super.key});
@@ -11,8 +14,10 @@ class ContactScreen extends StatefulWidget {
 
 class _ContactScreenState extends State<ContactScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _emailTEControlller = TextEditingController();
-  final TextEditingController _phoneTEControlller = TextEditingController();
+  final TextEditingController _nameTEController = TextEditingController();
+  final TextEditingController _emailTEController = TextEditingController();
+  final TextEditingController _phoneTEController = TextEditingController();
+  final TextEditingController _msgTEController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +53,19 @@ class _ContactScreenState extends State<ContactScreen> {
                     height: Get.height * 0.02,
                   ),
                   TextFormField(
-                    controller: _emailTEControlller,
+                    controller: _nameTEController,
+                    keyboardType: TextInputType.text,
+                    validator: (String? v) {
+                      if (v!.isEmpty) {
+                        return "enter name";
+                      }
+                    },
+                    decoration: const InputDecoration(hintText: 'Name'),
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.015,
+                  ), TextFormField(
+                    controller: _emailTEController,
                     keyboardType: TextInputType.emailAddress,
                     validator: (String? v) {
                       if (v!.isEmpty) {
@@ -61,7 +78,7 @@ class _ContactScreenState extends State<ContactScreen> {
                     height: Get.height * 0.015,
                   ),
                   TextFormField(
-                    controller: _phoneTEControlller,
+                    controller: _phoneTEController,
                     keyboardType: TextInputType.number,
                     validator: (String? v) {
                       if (v!.isEmpty) {
@@ -69,6 +86,15 @@ class _ContactScreenState extends State<ContactScreen> {
                       }
                     },
                     decoration: const InputDecoration(hintText: 'Phone'),
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.02,
+                  ),
+                  TextFormField(
+                    controller: _msgTEController,
+                    keyboardType: TextInputType.text,
+                    maxLines: 3,
+                    decoration: const InputDecoration(hintText: 'Message (Optional)'),
                   ),
                   SizedBox(
                     height: Get.height * 0.02,
@@ -83,11 +109,19 @@ class _ContactScreenState extends State<ContactScreen> {
                           replacement: const Center(child: CircularProgressIndicator(),),
                           child: ElevatedButton(
                             onPressed: () async {
-                             bool result = await controller.sendContactInfo(_emailTEControlller.text, _phoneTEControlller.text);
-                             if(result){
-                               _emailTEControlller.clear();
-                               _phoneTEControlller.clear();
-                             }
+                              if(_formKey.currentState!.validate()){
+                                bool result = await controller.sendContactInfo(
+                                  name: _nameTEController.text.trim(),
+                                  email: _emailTEController.text.trim(),
+                                  phone: _phoneTEController.text,
+                                  msg: _msgTEController.text);
+                              if(result){
+                                  _nameTEController.clear();
+                                  _emailTEController.clear();
+                                  _phoneTEController.clear();
+                                  _msgTEController.clear();
+                                }
+                              }
 
                             },
                             child: const Text(
@@ -105,8 +139,27 @@ class _ContactScreenState extends State<ContactScreen> {
                     }
                   ),
                   SizedBox(
-                    height: Get.height * 0.12,
+                    height: 40,
                   ),
+                  Container(
+                    height: Get.height * 0.8,
+                    width: Get.width,
+                    color: Colors.orange[50],
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: Get.height * 0.1,
+                        ),
+                        contactCart(CupertinoIcons.home,
+                            "211B Avenue Charles de Gaulle \n 92200 Neuilly-sur-Seine"),
+                        SizedBox(
+                          height: Get.height * 0.04,
+                        ),
+                        contactCart(CupertinoIcons.mail,
+                            "accueil@onework.fr \n 01 86 90 93 50"),
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),

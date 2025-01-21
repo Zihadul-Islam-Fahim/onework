@@ -79,12 +79,12 @@ class SelectRoleScreen extends StatelessWidget {
               height: Get.height * 0.02,
             ),
             selectRoleTile(true,Icons.home_work_outlined, 'Large Retail',
-                "Whether you are a candidate looking for professional opportunities or a company  looking for qualified profiles, we are here to support you."),
+                "Whether you are a candidate looking for professional opportunities or a company looking for qualified profiles, we are here to support you."),
             SizedBox(
               height: Get.height * 0.02,
             ),
             selectRoleTile(true,CupertinoIcons.house_alt, 'Hotel and Catering',
-                "We offer our support both to candidates looking for professional opportunities and to companies looking for qualified talent")
+                "We offer our support both to candidates looking for professional opportunities and to companies looking for qualified talent")
           ],
         ),
       )),

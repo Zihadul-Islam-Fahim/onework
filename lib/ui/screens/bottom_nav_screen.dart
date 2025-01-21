@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:onework2/data/controller/auth_controller.dart';
 import 'package:onework2/data/controller/bottom_nav_controller.dart';
+import 'package:onework2/ui/screens/auth/login_screen.dart';
 import 'package:onework2/ui/screens/contact_screen.dart';
 import 'package:onework2/ui/screens/home_screen.dart';
 import 'package:onework2/ui/screens/inbox_screen.dart';
@@ -27,7 +29,11 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
 
   @override
   void initState() {
-    _bottomNavController.backToHome();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _bottomNavController.backToHome();
+    });
+
+
     super.initState();
   }
 
@@ -46,7 +52,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
                 icon: Icon(CupertinoIcons.home), label: "Home"),
             BottomNavigationBarItem(
                 icon: Icon(Icons.shopping_bag),
-                label: "Applied"),
+                label: "Our Jobs"),
             BottomNavigationBarItem(
                 icon: Icon(CupertinoIcons.chat_bubble_2_fill),
                 label: "Chat"),
@@ -58,7 +64,16 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
                 label: "Contact"),
           ],
           onTap: (index) {
-            _bottomNavController.changeIndex(index);
+            if(index== 2){
+              if(AuthController.token == null){
+                Get.to(()=> const LoginScreen());
+              }else{
+                _bottomNavController.changeIndex(index);
+              }
+            }else{
+              _bottomNavController.changeIndex(index);
+            }
+
           },
         ),
       );

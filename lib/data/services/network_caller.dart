@@ -1,18 +1,24 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart';
+import '../controller/auth_controller.dart';
 import '../models/network_response.dart';
 
 class NetworkCaller {
-  Future<NetworkResponse> getRequest(String url,) async {
-    log(url);
+  Future<NetworkResponse> getRequest(String url,{String? token}) async {
 
-    Response response = await get(Uri.parse(url),);
-    log(response.statusCode.toString());
-    log(response.body.toString());
+                                                                          log(url);
+                                                                          log(token ?? "null token");
+
+    Response response = await get(Uri.parse(url), headers: {
+      'Authorization': "Bearer ${token ?? AuthController.token}",
+      'Content-type': 'application/json'
+    });
+                                                                          log(response.statusCode.toString());
+                                                                          log(response.body.toString());
     final decodedResponse = jsonDecode(response.body);
 
-    if (response.statusCode == 200 && decodedResponse["msg"] == "success") {
+    if (response.statusCode == 200 ) {
       return NetworkResponse(
         isSuccess: true,
         statusCode: response.statusCode,
@@ -40,7 +46,7 @@ class NetworkCaller {
                                                                                 log(url);
                                                                                 log(body.toString());
     Response response = await post(Uri.parse(url),
-        body: jsonEncode(body),
+        body: body,
       );
                                                                                 log(response.statusCode.toString());
                                                                                 log(response.body.toString());

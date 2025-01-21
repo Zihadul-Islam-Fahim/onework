@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:onework2/ui/screens/identify_screen.dart';
 import 'package:onework2/ui/screens/select_role_screen.dart';
 
 
@@ -36,7 +37,7 @@ Container homeImageContainer(
               Expanded(
                 child: InkWell(
                   onTap: () {
-                    Get.to(()=> const SelectRoleScreen());
+                    Get.to(()=> const IdentifyScreen());
                   },
                   child: Container(
                     height: Get.height * 0.05,

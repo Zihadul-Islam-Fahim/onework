@@ -6,30 +6,35 @@ import '../utilities/urls.dart';
 
 class ContactController extends GetxController{
   bool inProgress = false;
+  String? msg;
 
-  Future<bool> sendContactInfo(String email,String phone) async {
+  Future<bool> sendContactInfo(
+      {required String email, required String phone, String? msg, required String name}) async {
     inProgress =true;
     update();
 
     Map<String,dynamic> inputParams ={
+      "name":name,
       "email":email,
-      'phone':phone
+      'phone':phone,
+      'message': msg
     };
 try{
     final NetworkResponse response = await NetworkCaller().postRequest(Urls.contact,body: inputParams);
     if(response.isSuccess){
-      Get.snackbar('Success','Information sent',backgroundColor: Colors.green,colorText: Colors.white);
+
+      Get.snackbar('Success',response.responseData["message"],backgroundColor: Colors.green,colorText: Colors.white);
       inProgress= false;
       update();
       return true;
     }else{
-      Get.snackbar('Something went wrong!',"Try again",backgroundColor: Colors.red,colorText: Colors.white);
+      Get.snackbar('Something went wrong!',response.responseData["message"],backgroundColor: Colors.red,colorText: Colors.white);
       inProgress= false;
       update();
       return false;
     }
 }catch(e){
-  Get.snackbar('Something went wrong!',"Try again after check internet connection",backgroundColor: Colors.red,colorText: Colors.white);
+  Get.snackbar('Something went wrong!',e.toString(),backgroundColor: Colors.red,colorText: Colors.white);
   inProgress = false;
   update();
   return false;

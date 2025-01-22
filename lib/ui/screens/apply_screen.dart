@@ -233,14 +233,17 @@ class _ApplyScreenState extends State<ApplyScreen> {
                                       controller.file != null &&
                                       Get.find<CategoryController>().currentValue!.name !=
                                           'What type of contract are you interested in?') {
-                                    mySnackbar(context,
-                                        'Please wait until upload your file....');
+
                                     bool result = await controller.sendInfo(
-                                        _nameTEControlller.text.trim(),
-                                        _fullNameTEControlller.text.trim(),
-                                        _emailTEControlller.text.trim(),
-                                        _phoneTEControlller.text.trim(),
-                                        _aboutProjectTEControlller.text.trim());
+                                       name:  _nameTEControlller.text.trim(),
+                                      fName:   _fullNameTEControlller.text.trim(),
+                                      email:   _emailTEControlller.text.trim(),
+                                       phone:  _phoneTEControlller.text.trim(),
+                                       des: _aboutProjectTEControlller.text.trim(),
+                                        cId: Get.find<CategoryController>().currentValue!.id.toString(),
+
+                                    );
+
                                     if (result) {
                                       Get.bottomSheet(
                                         BottomSheet(
@@ -300,7 +303,9 @@ class _ApplyScreenState extends State<ApplyScreen> {
                                                         Get.back();
                                                       },
                                                       child: const Text(
-                                                          "Ok,Thanks"),
+                                                          "Ok,Thanks",
+                                                      style: TextStyle(fontFamily: 'Poppins',color: Colors.black),
+                                                      ),
                                                     ),
                                                   ),
                                                 ],

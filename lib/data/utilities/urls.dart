@@ -1,6 +1,6 @@
 class Urls{
  // static const String _bseUrl = "http://onewk.site";
-  static const String _bseUrl = "https://appsowk.org/api";
+  static const String _bseUrl = "https://onewk.appsowk.org/api";
   static String login = "$_bseUrl/login";
   static String register = "$_bseUrl/register";
   static String candidatesApply = "$_bseUrl/candidates";

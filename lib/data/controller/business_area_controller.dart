@@ -8,7 +8,7 @@ import '../models/network_response.dart';
 class BusinessAreaController extends GetxController {
   bool inProgress = false;
 
-  businessApply(
+ Future<bool> businessApply(
       {required String cName, required String name, required String email, required String phone, required String cId, required String des}) async {
     inProgress = true;
     update();
@@ -32,11 +32,15 @@ class BusinessAreaController extends GetxController {
 
         inProgress = false;
         update();
+
+        return true;
       } else {
         Get.snackbar('Something went wrong!', "Try again",
             backgroundColor: Colors.red, colorText: Colors.white);
         inProgress = false;
         update();
+
+        return false;
 
       }
     }catch(e){
@@ -44,6 +48,8 @@ class BusinessAreaController extends GetxController {
           backgroundColor: Colors.red, colorText: Colors.white);
       inProgress = false;
       update();
+
+      return false;
     }
   }
 }

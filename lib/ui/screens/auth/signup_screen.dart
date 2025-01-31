@@ -3,8 +3,6 @@ import 'package:get/get.dart';
 import 'package:onework2/data/controller/signup_controller.dart';
 import 'package:onework2/ui/screens/greeting_screen.dart';
 
-import 'login_screen.dart';
-
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
 
@@ -77,6 +75,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               if (v!.isEmpty) {
                                 return "enter name";
                               }
+                              return null;
                             },
                             decoration: const InputDecoration(hintText: 'Name'),
                           ),
@@ -90,10 +89,12 @@ class _SignupScreenState extends State<SignupScreen> {
                               if (v!.isEmpty) {
                                 return "enter email";
                               }
+                              return null;
                             },
                             decoration: const InputDecoration(
                                 hintText: 'Email Address'),
-                          ), SizedBox(
+                          ),
+                          SizedBox(
                             height: size.height * 0.015,
                           ),
                           TextFormField(
@@ -103,9 +104,10 @@ class _SignupScreenState extends State<SignupScreen> {
                               if (v!.isEmpty) {
                                 return "enter phone";
                               }
+                              return null;
                             },
-                            decoration: const InputDecoration(
-                                hintText: 'Phone Number'),
+                            decoration:
+                                const InputDecoration(hintText: 'Phone Number'),
                           ),
                           SizedBox(
                             height: size.height * 0.015,
@@ -117,6 +119,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               if (v!.isEmpty) {
                                 return "enter password";
                               }
+                              return null;
                             },
                             decoration:
                                 const InputDecoration(hintText: 'Password'),

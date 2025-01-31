@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:onework2/data/controller/apply_controller.dart';
-import 'package:onework2/data/controller/business_area_controller.dart';
 import 'package:onework2/data/controller/category_controller.dart';
 import 'package:onework2/data/models/category_model.dart';
 import 'package:onework2/data/models/person_model.dart';

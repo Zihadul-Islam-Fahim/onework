@@ -45,10 +45,14 @@ class NetworkCaller {
       {Map<String,dynamic>? body}) async {
                                                                                 log(url);
                                                                                 log(body.toString());
-    Response response = await post(Uri.parse(url),
-        body: body,
-      );
-                                                                                log(response.statusCode.toString());
+    Response response = await post(
+      Uri.parse(url),
+      headers: {
+        'Authorization': "Bearer ${AuthController.token}",
+      },
+      body: body,
+    );
+    log(response.statusCode.toString());
                                                                                 log(response.body.toString());
 
     final decodedResponse = jsonDecode(response.body);

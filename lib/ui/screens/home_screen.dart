@@ -98,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           fontSize: 16, fontFamily: 'poppins'),
                                     ),
                                     AuthController.token == null
-                                        ? SizedBox()
+                                        ? const SizedBox()
                                         : MaterialButton(
                                             color: Colors.red,
                                             onPressed: () {

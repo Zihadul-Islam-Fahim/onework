@@ -9,7 +9,7 @@ InkWell selectRoleTile(bool isIdentify, IconData icon, String title, String des,
   return InkWell(
     onTap: () {
       if (isIdentify) {
-        Get.to(() => IdentifyScreen());
+        Get.to(() => const IdentifyScreen());
       } else {
         isBusiness
             ? Get.to(() => const BusinessAreaScreen())

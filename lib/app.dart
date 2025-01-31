@@ -28,6 +28,7 @@ class OneWorkApp extends StatelessWidget {
         ),
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
+
           contentPadding: const EdgeInsets.symmetric(horizontal: 10,vertical: 14),
           fillColor: Colors.grey[100],
           hintStyle: const TextStyle(fontFamily: 'poppins'),

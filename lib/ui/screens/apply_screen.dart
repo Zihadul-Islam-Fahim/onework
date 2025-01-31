@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:onework2/data/controller/category_controller.dart';
-import 'package:onework2/data/controller/contact_controller.dart';
 import 'package:onework2/data/models/category_model.dart';
 import 'package:onework2/data/utilities/style.dart';
 import 'package:onework2/ui/widgets/back_button.dart';
+
 import '../../data/controller/apply_controller.dart';
 
 class ApplyScreen extends StatefulWidget {
@@ -16,11 +16,11 @@ class ApplyScreen extends StatefulWidget {
 
 class _ApplyScreenState extends State<ApplyScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _nameTEControlller = TextEditingController();
-  final TextEditingController _fullNameTEControlller = TextEditingController();
-  final TextEditingController _emailTEControlller = TextEditingController();
-  final TextEditingController _phoneTEControlller = TextEditingController();
-  final TextEditingController _aboutProjectTEControlller =
+  final TextEditingController _nameTEController = TextEditingController();
+  final TextEditingController _fullNameTEController = TextEditingController();
+  final TextEditingController _emailTEController = TextEditingController();
+  final TextEditingController _phoneTEController = TextEditingController();
+  final TextEditingController _aboutProjectTEController =
       TextEditingController();
 
   @override
@@ -129,7 +129,7 @@ class _ApplyScreenState extends State<ApplyScreen> {
                         height: Get.height * 0.02,
                       ),
                       TextFormField(
-                        controller: _nameTEControlller,
+                        controller: _nameTEController,
                         validator: (String? v) {
                           if (v!.isEmpty) {
                             return 'enter name';
@@ -142,7 +142,7 @@ class _ApplyScreenState extends State<ApplyScreen> {
                         height: Get.height * 0.015,
                       ),
                       TextFormField(
-                        controller: _fullNameTEControlller,
+                        controller: _fullNameTEController,
                         validator: (String? v) {
                           if (v!.isEmpty) {
                             return 'enter full name';
@@ -156,7 +156,7 @@ class _ApplyScreenState extends State<ApplyScreen> {
                         height: Get.height * 0.015,
                       ),
                       TextFormField(
-                        controller: _emailTEControlller,
+                        controller: _emailTEController,
                         keyboardType: TextInputType.emailAddress,
                         validator: (String? v) {
                           if (v!.isEmpty) {
@@ -171,7 +171,7 @@ class _ApplyScreenState extends State<ApplyScreen> {
                         height: Get.height * 0.015,
                       ),
                       TextFormField(
-                        controller: _phoneTEControlller,
+                        controller: _phoneTEController,
                         keyboardType: TextInputType.phone,
                         validator: (String? v) {
                           if (v!.isEmpty) {
@@ -201,7 +201,7 @@ class _ApplyScreenState extends State<ApplyScreen> {
                         height: Get.height * 0.015,
                       ),
                       TextFormField(
-                        controller: _aboutProjectTEControlller,
+                        controller: _aboutProjectTEController,
                         maxLines: 2,
                         validator: (String? v) {
                           if (v!.isEmpty) {
@@ -235,11 +235,11 @@ class _ApplyScreenState extends State<ApplyScreen> {
                                           'What type of contract are you interested in?') {
 
                                     bool result = await controller.sendInfo(
-                                       name:  _nameTEControlller.text.trim(),
-                                      fName:   _fullNameTEControlller.text.trim(),
-                                      email:   _emailTEControlller.text.trim(),
-                                       phone:  _phoneTEControlller.text.trim(),
-                                       des: _aboutProjectTEControlller.text.trim(),
+                                       name:  _nameTEController.text.trim(),
+                                      fName:   _fullNameTEController.text.trim(),
+                                      email:   _emailTEController.text.trim(),
+                                       phone:  _phoneTEController.text.trim(),
+                                       des: _aboutProjectTEController.text.trim(),
                                         cId: Get.find<CategoryController>().currentValue!.id.toString(),
 
                                     );
@@ -294,11 +294,11 @@ class _ApplyScreenState extends State<ApplyScreen> {
                                                     width: double.infinity,
                                                     child: ElevatedButton(
                                                       onPressed: () {
-                                                        _nameTEControlller.clear();
-                                                        _fullNameTEControlller.clear();
-                                                        _emailTEControlller.clear();
-                                                        _phoneTEControlller.clear();
-                                                        _aboutProjectTEControlller.clear();
+                                                        _nameTEController.clear();
+                                                        _fullNameTEController.clear();
+                                                        _emailTEController.clear();
+                                                        _phoneTEController.clear();
+                                                        _aboutProjectTEController.clear();
                                                         controller.onFinished();
                                                         Get.back();
                                                       },

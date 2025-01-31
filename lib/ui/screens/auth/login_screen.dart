@@ -86,6 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               if (v!.isEmpty) {
                                 return "enter email";
                               }
+                              return null;
                             },
                             decoration: const InputDecoration(
                                 hintText: 'Email Address'),
@@ -100,6 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               if (v!.isEmpty) {
                                 return "enter password";
                               }
+                              return null;
                             },
                             decoration:
                                 const InputDecoration(hintText: 'Password'),

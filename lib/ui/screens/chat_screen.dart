@@ -1,12 +1,14 @@
-import 'dart:developer';
-
-import 'package:flutter/cupertino.dart';
+import 'dart:convert';
+// Ensure you import the package
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:onework2/ui/screens/auth/login_screen.dart';
+import 'package:onework2/data/controller/chat_controller.dart';
+import 'package:onework2/data/models/message_model.dart';
+
+// import 'package:web_socket_channel/web_socket_channel.dart';
+import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 
 import '../../data/controller/auth_controller.dart';
-import '../../data/models/message.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -16,146 +18,211 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  List<Message> msgList = [
-    Message(message: "Let me know how can i assist you?", self: false)
-  ];
+  List<MessageModel> msgList = [];
   final TextEditingController _selfMsgController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final ScrollController _scrollController = ScrollController();
+
+  final chatController = Get.find<ChatController>();
+
+
 
   @override
-  initState() {
-
+  void initState() {
     super.initState();
+
+    msgList = chatController.msgList.reversed.toList();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
+
+     _initPusher();
+
   }
+
+  void _scrollToBottom() {
+    if (_scrollController.hasClients) {
+      _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+    }
+  }
+
+  void _sendMessage() {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        msgList
+            .add(MessageModel(message: _selfMsgController.text, type: 'user'));
+        _selfMsgController.clear();
+      });
+
+      Future.delayed(const Duration(milliseconds: 100), () {
+        if (_scrollController.hasClients) {
+          _scrollController.animateTo(
+            _scrollController.position.maxScrollExtent,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeOut,
+          );
+        }
+      });
+    }
+  }
+
+  final PusherChannelsFlutter pusher = PusherChannelsFlutter();
+  String? channelName;
+
+  Future<void> _initPusher() async {
+    debugPrint(AuthController.user!.user!.id.toString());
+    channelName = 'chatChannel.${AuthController.user!.user!.id}';
+
+    try {
+      await pusher.init(
+        apiKey: 'ad012c372ed42153296c',
+        cluster: 'ap2',
+        onConnectionStateChange: (String? previous, String? current) {
+          print('Pusher Connection State Changed: $previous -> $current');
+        },
+        onError: (String message, int? code, dynamic e) {
+          print('Pusher Error: $message (Code: $code)');
+        },
+      );
+
+      await pusher.subscribe(
+        channelName: channelName!,
+        onEvent: (dynamic event) {
+          print('Received event: ${event.eventName} -> ${event.data}');
+
+          if (event.eventName == 'chatEvent') {
+            Map<String, dynamic> chatData = jsonDecode(event.data);
+            print('New chat: ${chatData['message']}');
+            msgList
+                .add(MessageModel(type: "admin", message: chatData['message']));
+            if (_scrollController.hasClients) {
+              _scrollController.animateTo(
+                _scrollController.position.maxScrollExtent,
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeOut,
+              );
+            }
+            setState(() {});
+
+            // Handle received chat data
+          } else {}
+        },
+      );
+
+      await pusher.connect();
+      print('Connected to Pusher and subscribed to $channelName');
+    } catch (e) {
+      print('Pusher initialization error: $e');
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade200,
       appBar: AppBar(
+        backgroundColor: Colors.amberAccent,
         title: Row(
           children: [
-            CircleAvatar(
-              backgroundColor: Colors.black,
+            ClipRRect(
+              borderRadius: BorderRadius.circular(0),
               child: Image.asset(
-                "assets/images/whiteOneWorkLogo.png",
+                "assets/images/onework.png",
                 fit: BoxFit.cover,
-                height: Get.height * 0.016,
+                height: Get.height * 0.018,
               ),
             ),
-            SizedBox(
-              width: Get.width * 0.02,
-            ),
-            const Text(
-              'Onework Support',
-              style: TextStyle(fontSize: 16),
-            )
+            const SizedBox(width: 10),
+            const Text('Onework Support',
+                style: TextStyle(fontSize: 16, color: Colors.black)),
           ],
         ),
       ),
       body: Column(
         children: [
           Expanded(
-            child: Container(
-              color: Colors.grey.withOpacity(0.5),
-              child: ListView.separated(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ListView.builder(
+                controller: _scrollController,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 itemCount: msgList.length,
                 itemBuilder: (context, index) {
-                  return Row(
-                    mainAxisAlignment: msgList[index].self
-                        ? MainAxisAlignment.end
-                        : MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.only(
-                            left: 14, top: 10, bottom: 10, right: 10),
-                        margin: EdgeInsets.only(
-                            left: msgList[index].self ? 100 : 10,
-                            top: 10,
-                            bottom: 1,
-                            right: msgList[index].self ? 10 : 100),
-                        decoration: BoxDecoration(
-                          color: msgList[index].self
-                              ? Colors.amberAccent
-                              : Colors.white,
-                          borderRadius: BorderRadius.circular(20),
+                  bool isUser = msgList[index].type == 'user';
+                  return Align(
+                    alignment:
+                        isUser ? Alignment.centerRight : Alignment.centerLeft,
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 8),
+                      decoration: BoxDecoration(
+                        color: isUser ? Colors.amberAccent : Colors.white,
+                        borderRadius: BorderRadius.only(
+                          topLeft: const Radius.circular(12),
+                          topRight: const Radius.circular(12),
+                          bottomLeft:
+                              isUser ? const Radius.circular(12) : Radius.zero,
+                          bottomRight:
+                              isUser ? Radius.zero : const Radius.circular(12),
                         ),
-                        child: Text(
-                          msgList[index].message,
-                          style: const TextStyle(
-                              fontSize: 14,
-                              fontFamily: 'poppins',
-                              color: Colors.black),
-                          textAlign: msgList[index].self
-                              ? TextAlign.right
-                              : TextAlign.left,
-                        ),
+                        boxShadow: [
+                          const BoxShadow(color: Colors.black26, blurRadius: 2),
+                        ],
                       ),
-                    ],
-                  );
-                },
-                separatorBuilder: (BuildContext context, int index) {
-                  return SizedBox(
-                    height: Get.height * 0.005,
+                      child: Text(
+                        msgList[index].message!,
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: isUser ? Colors.black : Colors.black87),
+                      ),
+                    ),
                   );
                 },
               ),
             ),
           ),
           Container(
-            height: Get.height * 0.1,
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.all(10),
-                      margin:
-                          const EdgeInsets.only(right: 10, top: 15, bottom: 10),
-                      decoration: BoxDecoration(
-                        color: Colors.grey.withOpacity(0.5),
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: Center(
-                        child: Form(
-                          key: _formKey,
-                          child: TextFormField(
-                            controller: _selfMsgController,
-                            validator: (String? v) {
-                              if (v!.isEmpty) {
-                                return "empty";
-                              }
-                            },
-                            style: const TextStyle(fontSize: 14),
-                            decoration: const InputDecoration(
-                                fillColor: Colors.transparent,
-                                hintText: "Type Something..."),
-                          ),
+            padding: const EdgeInsets.all(10),
+            color: Colors.white,
+            child: Row(
+              children: [
+                Expanded(
+                  child: Form(
+                    key: _formKey,
+                    child: TextFormField(
+                      controller: _selfMsgController,
+                      validator: (String? v) =>
+                          v!.isEmpty ? "Message can't be empty" : null,
+                      style: const TextStyle(fontSize: 14),
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.grey.shade100,
+                        hintText: "Type a message...",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                          borderSide: BorderSide.none,
                         ),
+                        contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 12),
                       ),
                     ),
                   ),
-                  InkWell(
-                    onTap: () {
-                      if (_formKey.currentState!.validate()) {
-                        msgList.add(Message(
-                            message: _selfMsgController.text.trim(),
-                            self: true));
-                        _selfMsgController.clear();
-                        setState(() {});
-                        log(msgList.length.toString());
-                      }
-                    },
-                    child: const CircleAvatar(
-                      radius: 26,
-                      child: Icon(Icons.send),
+                ),
+                const SizedBox(width: 8),
+                InkWell(
+                  onTap: _sendMessage,
+                  child: const CircleAvatar(
+                    radius: 24,
+                    backgroundColor: Colors.amberAccent,
+                    child: Icon(Icons.send, color: Colors.white,
                     ),
-                  )
-                ],
-              ),
+                  ),
+                )
+              ],
             ),
-          )
+          ),
         ],
       ),
     );

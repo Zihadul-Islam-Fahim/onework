@@ -59,6 +59,7 @@ class _ContactScreenState extends State<ContactScreen> {
                       if (v!.isEmpty) {
                         return "enter name";
                       }
+                      return null;
                     },
                     decoration: const InputDecoration(hintText: 'Name'),
                   ),
@@ -71,6 +72,7 @@ class _ContactScreenState extends State<ContactScreen> {
                       if (v!.isEmpty) {
                         return "enter email";
                       }
+                      return null;
                     },
                     decoration: const InputDecoration(hintText: 'Mail Addess'),
                   ),
@@ -84,6 +86,7 @@ class _ContactScreenState extends State<ContactScreen> {
                       if (v!.isEmpty) {
                         return "enter phone";
                       }
+                      return null;
                     },
                     decoration: const InputDecoration(hintText: 'Phone'),
                   ),
@@ -138,7 +141,7 @@ class _ContactScreenState extends State<ContactScreen> {
                       );
                     }
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 40,
                   ),
                   Container(

@@ -74,6 +74,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                               if (v!.isEmpty) {
                                 return "enter email";
                               }
+                              return null;
                             },
                             decoration:
                             const InputDecoration(hintText: 'Email Address'),

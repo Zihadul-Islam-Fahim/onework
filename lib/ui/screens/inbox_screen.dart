@@ -1,10 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:onework2/data/controller/chat_controller.dart';
 import 'package:onework2/ui/screens/chat_screen.dart';
 
-import '../../data/controller/auth_controller.dart';
-import 'auth/login_screen.dart';
+
 
 class InboxScreen extends StatefulWidget {
   const InboxScreen({super.key});
@@ -16,15 +15,18 @@ class InboxScreen extends StatefulWidget {
 
 class _InboxScreenState extends State<InboxScreen> {
 
-  // @override
-  // void initState() {
-  //   if (AuthController.token == null) {
-  //     Get.offAll(() => const LoginScreen());
-  //   } else {
-  //
-  //   }
-  //   super.initState();
-  // }
+
+
+  @override
+  void initState() {
+    super.initState();
+
+
+  }
+
+
+
+
 
   @override
   Widget build(BuildContext context) {

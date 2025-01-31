@@ -1,13 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:onework2/data/controller/category_controller.dart';
 import 'package:onework2/data/models/category_model.dart';
+
 import '../../data/controller/business_area_controller.dart';
 import '../../data/utilities/style.dart';
 import '../widgets/back_button.dart';
-import '../widgets/contact_cart.dart';
 
 class BusinessAreaScreen extends StatefulWidget {
   const BusinessAreaScreen({super.key});
@@ -17,9 +15,13 @@ class BusinessAreaScreen extends StatefulWidget {
 }
 
 class _BusinessAreaScreenState extends State<BusinessAreaScreen> {
+
+
+  final cateController = Get.find<CategoryController>();
+
   @override
   void initState() {
-    Get.find<CategoryController>().getCategory("businesses");
+    cateController.getCategory("businesses");
     super.initState();
   }
 
@@ -29,6 +31,7 @@ class _BusinessAreaScreenState extends State<BusinessAreaScreen> {
   final TextEditingController _emailTEController = TextEditingController();
   final TextEditingController _phoneTEController = TextEditingController();
   final TextEditingController _desTEController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -106,8 +109,8 @@ class _BusinessAreaScreenState extends State<BusinessAreaScreen> {
                       'Leave us a message',
                       textAlign: TextAlign.start,
                       style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
                           color: Colors.black,
                           fontFamily: 'poppins'),
                     ),
@@ -136,7 +139,8 @@ class _BusinessAreaScreenState extends State<BusinessAreaScreen> {
                         }
                         return null;
                       },
-                      decoration: const InputDecoration(hintText: 'Name'),
+                      decoration: const InputDecoration(hintText: ' Your name'),
+
                     ),
                     SizedBox(
                       height: Get.height * 0.015,
@@ -157,6 +161,7 @@ class _BusinessAreaScreenState extends State<BusinessAreaScreen> {
                     ),
                     TextFormField(
                       controller: _phoneTEController,
+                      keyboardType: TextInputType.number,
                       validator: (String? v) {
                         if (v!.isEmpty) {
                           return 'enter phone number';
@@ -164,7 +169,8 @@ class _BusinessAreaScreenState extends State<BusinessAreaScreen> {
                         return null;
                       },
                       decoration:
-                          const InputDecoration(hintText: 'Telephone number'),
+                          const InputDecoration(hintText: 'Telephone number'
+                          ),
                     ),
                     SizedBox(
                       height: Get.height * 0.015,
@@ -177,7 +183,7 @@ class _BusinessAreaScreenState extends State<BusinessAreaScreen> {
                         child: businessAreaDropDownDecoratedBox(
                             currentValue: categoryController.currentValue ?? Category(id: 0,name: "What type of contract are you interested in?"),
                             valueList:
-                                categoryController.categoryModel.categoryList!,
+                                categoryController.categoryModel.categoryList ?? [],
                             controller: categoryController),
                       );
                     }),
@@ -207,23 +213,25 @@ class _BusinessAreaScreenState extends State<BusinessAreaScreen> {
                         height: Get.height * 0.07,
                         width: double.infinity,
                         child: ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
                             if (_formKey.currentState!.validate()) {
-                              if (Get.find<CategoryController>().currentValue !=
-                                  Get.find<CategoryController>()
-                                      .categoryModel
-                                      .categoryList!
-                                      .first) {
-                                controller.businessApply(
+                              if (cateController.currentValue != cateController.categoryModel.categoryList!.first) {
+                               bool res =await controller.businessApply(
                                     cName: _cNameTEController.text,
                                     name: _nameTEController.text,
                                     email: _emailTEController.text,
                                     phone: _phoneTEController.text,
-                                    cId: Get.find<CategoryController>()
-                                        .currentValue!
-                                        .id
-                                        .toString(),
+                                    cId: cateController.currentValue!.id.toString(),
                                     des: _desTEController.text);
+
+                               if(res){
+
+                                 openBottomSheet();
+
+
+
+
+                               }
                               } else {
                                 Get.snackbar(
                                     'Select Category', "Please select a category",
@@ -252,6 +260,77 @@ class _BusinessAreaScreenState extends State<BusinessAreaScreen> {
             }),
           ),
         ),
+      ),
+    );
+  }
+
+  openBottomSheet(){
+    Get.bottomSheet(
+      BottomSheet(
+        onClosing: () {},
+        builder: (context) {
+          return Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: Get.height * 0.02,
+                ),
+                const Icon(
+                  Icons.check_circle_outline,
+                  size: 100,
+                  color: Colors.green,
+                ),
+                SizedBox(
+                  height: Get.height * 0.06,
+                ),
+                SizedBox(
+                  height: Get.height * 0.02,
+                ),
+                const Text(
+                  "Information Sended",
+                  style: TextStyle(
+                      fontSize: 22,
+                      fontWeight:
+                      FontWeight.bold,
+                      fontFamily: 'poppins',
+                      color: Colors.black),
+                ),
+                SizedBox(
+                  height: Get.height * 0.02,
+                ),
+                const Text(
+                  "Good job! Thanks for sending your information our teams will contact you as quickly as possible.",
+                  style: TextStyle(
+                      fontSize: 13,
+                      fontFamily: 'poppins',
+                      color: Colors.black),
+                ),
+                SizedBox(
+                  height: Get.height * 0.1,
+                ),
+                SizedBox(
+                  height: Get.height * 0.07,
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      _cNameTEController.clear();
+                      _nameTEController.clear();
+                      _phoneTEController.clear();
+                      _emailTEController.clear();
+                      _desTEController.clear();
+                      Get.back();
+                    },
+                    child: const Text(
+                      "Ok,Thanks",
+                      style: TextStyle(fontFamily: 'Poppins',color: Colors.black),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }

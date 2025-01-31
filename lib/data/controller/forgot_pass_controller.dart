@@ -6,9 +6,6 @@ import 'package:onework2/data/models/network_response.dart';
 import 'package:onework2/data/services/network_caller.dart';
 import 'package:onework2/data/utilities/urls.dart';
 
-import '../models/userModel.dart';
-import 'auth_controller.dart';
-
 class ForgotPassController extends GetxController{
 
   bool inProgress = false;

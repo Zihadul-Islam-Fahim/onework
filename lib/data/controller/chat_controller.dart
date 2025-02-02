@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:get/get.dart';
 import 'package:onework2/data/controller/auth_controller.dart';
 import 'package:onework2/data/models/message_model.dart';
 import 'package:onework2/data/models/network_response.dart';
@@ -7,18 +8,31 @@ import 'package:onework2/data/services/network_caller.dart';
 
 import '../utilities/urls.dart';
 
-class ChatController{
+class ChatController extends GetxController{
+
+  bool msgSending = false;
 
   List<MessageModel> msgList = [];
 
 
   Future<bool> sendMsg(String msg)async{
 
-    NetworkResponse networkResponse = await NetworkCaller().postRequest(Urls.getMsg,body: {"message": msg});
+    msgSending = true;
+    update();
+
+
+    NetworkResponse networkResponse = await NetworkCaller().postRequest(Urls.sendMsg,body: {"message": msg});
 
     if(networkResponse.isSuccess){
+
+      msgSending = false;
+      update();
+
       return true;
     }else{
+
+      msgSending = false;
+      update();
       return false;
     }
   }

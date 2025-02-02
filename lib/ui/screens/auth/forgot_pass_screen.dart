@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:onework2/data/controller/login_controller.dart';
+import 'package:onework2/data/controller/forgot_pass_controller.dart';
 import 'package:onework2/data/utilities/style.dart';
-import 'package:onework2/ui/screens/auth/otp_verify_screen.dart';
+import 'package:onework2/ui/screens/auth/set_new_pass_screen.dart';
 
 class ForgotPassScreen extends StatefulWidget {
   const ForgotPassScreen({super.key});
@@ -58,7 +58,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                             height: size.height * 0.008,
                           ),
                           const Text(
-                            "4 digit pin will sent to your email address.",
+                            "5 digit pin will sent to your email address.",
                             style: TextStyle(
                                 fontSize: 13,
                                 fontFamily: 'poppins',
@@ -86,7 +86,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                           SizedBox(
                             height: size.height * 0.02,
                           ),
-                          GetBuilder<LoginController>(
+                          GetBuilder<ForgotPassController>(
                               builder: (controller) {
                                 return SizedBox(
                                   height: size.height * 0.06,
@@ -97,8 +97,15 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                                     child: ElevatedButton(
                                       onPressed: () async {
                                         if(_formKey.currentState!.validate()){
-                                          Get.to(()=> const OtpVerifyScreen());
-                                          mySnackbar(context, "4 digit pin sent to your email address");
+
+                                          final res = await controller.sendOTP(_emailTEControlller.text.trim());
+                                          if(res) {
+                                            Get.to(() => const SetNewPassScreen());
+                                            mySnackbar(context,
+                                                "5 digit pin sent to your email address");
+                                          }else{
+
+                                          }
                                         }
 
                                       },

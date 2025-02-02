@@ -1,15 +1,9 @@
-import 'dart:convert';
 // Ensure you import the package
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:onework2/data/controller/chat_controller.dart';
-import 'package:onework2/data/models/message_model.dart';
 
-// import 'package:web_socket_channel/web_socket_channel.dart';
-import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
-
-import '../../data/controller/auth_controller.dart';
 import '../../data/utilities/style.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -20,10 +14,10 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  List<MessageModel> msgList = [];
+ // List<MessageModel> msgList = [];
   final TextEditingController _selfMsgController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final ScrollController _scrollController = ScrollController();
+
 
   final chatController = Get.find<ChatController>();
 
@@ -33,17 +27,13 @@ class _ChatScreenState extends State<ChatScreen> {
   void initState() {
     super.initState();
 
-    msgList = chatController.msgList.reversed.toList();
-
     WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
-
-     _initPusher();
 
   }
 
   void _scrollToBottom() {
-    if (_scrollController.hasClients) {
-      _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+    if (chatController.scrollController.hasClients) {
+      chatController.scrollController.jumpTo(chatController.scrollController.position.maxScrollExtent);
     }
   }
 
@@ -52,16 +42,12 @@ class _ChatScreenState extends State<ChatScreen> {
       final res = await chatController.sendMsg(_selfMsgController.text);
 
       if(res){
-        setState(() {
-        //  msgList.add(MessageModel(message: _selfMsgController.text, type: 'user'));
-          _selfMsgController.clear();
-        });
-
+        _selfMsgController.clear();
 
         Future.delayed(const Duration(milliseconds: 100), () {
-          if (_scrollController.hasClients) {
-            _scrollController.animateTo(
-              _scrollController.position.maxScrollExtent,
+          if (chatController.scrollController.hasClients) {
+            chatController.scrollController.animateTo(
+              chatController.scrollController.position.maxScrollExtent,
               duration: const Duration(milliseconds: 300),
               curve: Curves.easeOut,
             );
@@ -71,63 +57,10 @@ class _ChatScreenState extends State<ChatScreen> {
         mySnackbar(context, 'Failed to send message',true);
       }
 
-
-
-
     }
   }
 
-  final PusherChannelsFlutter pusher = PusherChannelsFlutter();
-  String? channelName;
 
-  Future<void> _initPusher() async {
-    debugPrint(AuthController.user!.user!.id.toString());
-    channelName = 'chatChannel.${AuthController.user!.user!.id}';
-
-    try {
-      await pusher.init(
-        apiKey: 'ad012c372ed42153296c',
-        cluster: 'ap2',
-        onConnectionStateChange: (String? previous, String? current) {
-          print('Pusher Connection State Changed: $previous -> $current');
-        },
-        onError: (String message, int? code, dynamic e) {
-          print('Pusher Error: $message (Code: $code)');
-        },
-      );
-
-      await pusher.subscribe(
-        channelName: channelName!,
-        onEvent: (dynamic event) {
-          print('Received event: ${event.eventName} -> ${event.data}');
-
-          if (event.eventName == 'chatEvent') {
-            Map<String, dynamic> chatData = jsonDecode(event.data);
-            print('New chat: ${chatData['message']}');
-            msgList.add(MessageModel(type: (chatData["is_admin"] == true) ? "admin" : 'user', message: chatData['message']));
-
-            Future.delayed(const Duration(milliseconds: 100), () {
-              if (_scrollController.hasClients) {
-                _scrollController.animateTo(
-                  _scrollController.position.maxScrollExtent,
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeOut,
-                );
-              }
-            });
-            setState(() {});
-
-            // Handle received chat data
-          } else {}
-        },
-      );
-
-      await pusher.connect();
-      print('Connected to Pusher and subscribed to $channelName');
-    } catch (e) {
-      print('Pusher initialization error: $e');
-    }
-  }
 
 
   @override
@@ -160,12 +93,12 @@ class _ChatScreenState extends State<ChatScreen> {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ListView.builder(
-                    controller: _scrollController,
+                    controller: chatController.scrollController,
                     padding:
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                    itemCount: msgList.length,
+                    itemCount: chatController.msgList.length,
                     itemBuilder: (context, index) {
-                      bool isUser = msgList[index].type == 'user';
+                      bool isUser = chatController.msgList[index].type == 'user';
                       return Align(
                         alignment:
                             isUser ? Alignment.centerRight : Alignment.centerLeft,
@@ -183,12 +116,12 @@ class _ChatScreenState extends State<ChatScreen> {
                               bottomRight:
                                   isUser ? Radius.zero : const Radius.circular(12),
                             ),
-                            boxShadow: [
-                              const BoxShadow(color: Colors.black26, blurRadius: 2),
+                            boxShadow: const [
+                              BoxShadow(color: Colors.black26, blurRadius: 2),
                             ],
                           ),
                           child: Text(
-                            msgList[index].message!,
+                            chatController.msgList[index].message!,
                             style: TextStyle(
                                 fontSize: 14,
                                 color: isUser ? Colors.black : Colors.black87),
@@ -229,7 +162,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     const SizedBox(width: 8),
                     Visibility(
                       visible: controller.msgSending==false,
-                      replacement: Center(child: SizedBox(height: 25,width: 25,child: const CircularProgressIndicator(strokeWidth: 3,))),
+                      replacement: const Center(child: SizedBox(height: 25,width: 25,child: CircularProgressIndicator(strokeWidth: 3,))),
                       child: InkWell(
                         onTap: _sendMessage,
                         child: const CircleAvatar(

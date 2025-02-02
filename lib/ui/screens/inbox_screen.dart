@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:onework2/data/controller/chat_controller.dart';
+import 'package:onework2/data/controller/inbox_controller.dart';
 import 'package:onework2/ui/screens/chat_screen.dart';
-
-
 
 class InboxScreen extends StatefulWidget {
   const InboxScreen({super.key});
@@ -12,21 +10,11 @@ class InboxScreen extends StatefulWidget {
   State<InboxScreen> createState() => _InboxScreenState();
 }
 
-
 class _InboxScreenState extends State<InboxScreen> {
-
-
-
   @override
   void initState() {
     super.initState();
-
-
   }
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -61,12 +49,19 @@ class _InboxScreenState extends State<InboxScreen> {
                   ),
                   title: const Text(
                     "Onework Support",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,fontFamily: 'poppins'),
-                  ),
-                  subtitle: const Text(
-                    "Hi,Let me know how can i assist you?",
                     style: TextStyle(
-                        fontSize: 14, overflow: TextOverflow.ellipsis),
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'poppins'),
+                  ),
+                  subtitle: GetBuilder<InboxController>(
+                    builder: (controller) {
+                      return Text(
+                        controller.lastMsg,
+                        style: const TextStyle(
+                            fontSize: 14, overflow: TextOverflow.ellipsis),
+                      );
+                    },
                   ),
                 )
               ],

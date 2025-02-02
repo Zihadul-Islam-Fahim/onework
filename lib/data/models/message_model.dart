@@ -14,11 +14,11 @@ class MessageModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['message'] = this.message;
-    data['created_at'] = this.createdAt;
-    data['type'] = this.type;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['message'] = message;
+    data['created_at'] = createdAt;
+    data['type'] = type;
     return data;
   }
 }

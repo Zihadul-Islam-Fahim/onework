@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:get/get.dart';
+import 'package:onework2/data/controller/chat_controller.dart';
 import 'package:onework2/data/models/userModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -65,6 +66,7 @@ class AuthController extends GetxController {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     await sharedPreferences.clear();
     token = null;
+    Get.find<ChatController>().msgList = [];
     update();
   }
 

@@ -18,6 +18,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
@@ -194,70 +201,70 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Card _reviewCard(double height) {
-    return Card(
-        child: Container(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        children: [
-          const Row(
-            children: [
-              CircleAvatar(
-                child: Icon(Icons.person),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        "  Sarah Adel  ",
-                        style: TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black),
-                      ),
-                      Icon(
-                        Icons.star,
-                        color: Colors.yellow,
-                        size: 18,
-                      ),
-                      Icon(
-                        Icons.star,
-                        color: Colors.yellow,
-                        size: 18,
-                      ),
-                      Icon(
-                        Icons.star,
-                        color: Colors.yellow,
-                        size: 18,
-                      ),
-                      Icon(
-                        Icons.star,
-                        color: Colors.yellow,
-                        size: 18,
-                      ),
-                      Icon(
-                        Icons.star,
-                        color: Colors.yellow,
-                        size: 18,
-                      ),
-                    ],
-                  ),
-                  Text("   Cashier",
-                      style: TextStyle(fontSize: 9, color: Colors.black)),
-                ],
-              )
-            ],
-          ),
-          SizedBox(
-            height: height * 0.01,
-          ),
-          const Text(
-              'Onework consultants supported me thoughtout my mission search',
-              style: TextStyle(fontSize: 12, color: Colors.black))
-        ],
-      ),
-    ));
-  }
+  // Card _reviewCard(double height) {
+  //   return Card(
+  //       child: Container(
+  //     padding: const EdgeInsets.all(16),
+  //     child: Column(
+  //       children: [
+  //         const Row(
+  //           children: [
+  //             CircleAvatar(
+  //               child: Icon(Icons.person),
+  //             ),
+  //             Column(
+  //               crossAxisAlignment: CrossAxisAlignment.start,
+  //               children: [
+  //                 Row(
+  //                   children: [
+  //                     Text(
+  //                       "  Sarah Adel  ",
+  //                       style: TextStyle(
+  //                           fontSize: 13,
+  //                           fontWeight: FontWeight.bold,
+  //                           color: Colors.black),
+  //                     ),
+  //                     Icon(
+  //                       Icons.star,
+  //                       color: Colors.yellow,
+  //                       size: 18,
+  //                     ),
+  //                     Icon(
+  //                       Icons.star,
+  //                       color: Colors.yellow,
+  //                       size: 18,
+  //                     ),
+  //                     Icon(
+  //                       Icons.star,
+  //                       color: Colors.yellow,
+  //                       size: 18,
+  //                     ),
+  //                     Icon(
+  //                       Icons.star,
+  //                       color: Colors.yellow,
+  //                       size: 18,
+  //                     ),
+  //                     Icon(
+  //                       Icons.star,
+  //                       color: Colors.yellow,
+  //                       size: 18,
+  //                     ),
+  //                   ],
+  //                 ),
+  //                 Text("   Cashier",
+  //                     style: TextStyle(fontSize: 9, color: Colors.black)),
+  //               ],
+  //             )
+  //           ],
+  //         ),
+  //         SizedBox(
+  //           height: height * 0.01,
+  //         ),
+  //         const Text(
+  //             'Onework consultants supported me thoughtout my mission search',
+  //             style: TextStyle(fontSize: 12, color: Colors.black))
+  //       ],
+  //     ),
+  //   ));
+  // }
 }

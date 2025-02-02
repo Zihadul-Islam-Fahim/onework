@@ -9,6 +9,8 @@ class Urls{
   static String getMsg = "$_bseUrl/messages";
   static String sendMsg = "$_bseUrl/msg-store";
   static String user = "$_bseUrl/user";
+  static String sendOTP = "$_bseUrl/otp-send";
+  static String setNewPass = "$_bseUrl/forget-password";
 
   static String contact = "$_bseUrl/contacts";
 

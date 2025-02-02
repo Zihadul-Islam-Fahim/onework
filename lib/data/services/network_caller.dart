@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:get/get.dart';
 import 'package:http/http.dart';
+import 'package:onework2/ui/screens/auth/login_screen.dart';
 import '../controller/auth_controller.dart';
 import '../models/network_response.dart';
 
@@ -10,7 +12,7 @@ class NetworkCaller {
                                                                           log(url);
                                                                           log(token ?? "null token");
 
-    Response response = await get(Uri.parse(url), headers: {
+    var response = await get(Uri.parse(url), headers: {
       'Authorization': "Bearer ${token ?? AuthController.token}",
       'Content-type': 'application/json'
     });
@@ -26,11 +28,13 @@ class NetworkCaller {
       );
     } else if(response.statusCode == 401){
 
+      Get.to(()=> const LoginScreen());
+
       return NetworkResponse(
         isSuccess: false,
         statusCode: response.statusCode,
         responseData: decodedResponse,
-        msg: decodedResponse['data'],
+      //  msg: decodedResponse['data'],
       );
     }else {
       return NetworkResponse(
@@ -45,7 +49,7 @@ class NetworkCaller {
       {Map<String,dynamic>? body}) async {
                                                                                 log(url);
                                                                                 log(body.toString());
-    Response response = await post(
+    var response = await post(
       Uri.parse(url),
       headers: {
         'Authorization': "Bearer ${AuthController.token}",
@@ -64,6 +68,8 @@ class NetworkCaller {
         responseData: decodedResponse,
       );
     } else if (response.statusCode == 401) {
+
+      Get.to(()=> const LoginScreen());
 
       return NetworkResponse(
         isSuccess: false,

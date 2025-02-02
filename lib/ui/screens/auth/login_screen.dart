@@ -5,6 +5,7 @@ import 'package:onework2/ui/screens/auth/signup_screen.dart';
 
 import 'package:onework2/ui/screens/greeting_screen.dart';
 
+import '../../../data/controller/chat_controller.dart';
 import '../../../data/controller/login_controller.dart';
 import 'forgot_pass_screen.dart';
 
@@ -147,6 +148,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                           _emailTEControlller.text,
                                           _passwordTEControlller.text);
                                       if (result) {
+
+                                        Get.find<ChatController>().getMsg();
+
                                         Get.to(() => const GreetingScreen());
                                       }
                                     }

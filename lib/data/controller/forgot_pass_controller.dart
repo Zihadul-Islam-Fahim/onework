@@ -6,56 +6,44 @@ import 'package:onework2/data/models/network_response.dart';
 import 'package:onework2/data/services/network_caller.dart';
 import 'package:onework2/data/utilities/urls.dart';
 
-class ForgotPassController extends GetxController{
-
+class ForgotPassController extends GetxController {
   bool inProgress = false;
 
-
-  Future<bool> sendOTP(String name,String email,String phone,String password) async {
-    inProgress =true;
+  Future<bool> sendOTP(String email) async {
+    inProgress = true;
     update();
 
-    Map<String,dynamic> inputParams ={
-      "name" : name,
+    Map<String, dynamic> inputParams = {
       "email": email,
-      "phone": phone,
-      'password':password
     };
-    try{
-      final NetworkResponse response = await NetworkCaller().postRequest(
-          Urls.register, body: inputParams);
+    try {
+      final NetworkResponse response =
+          await NetworkCaller().postRequest(Urls.sendOTP, body: inputParams);
       if (response.isSuccess) {
-
-        String token = response.responseData["data"]["token"].toString();
-
-        final NetworkResponse userResponse = await NetworkCaller().getRequest(Urls.user,token: token);
-        if(userResponse.isSuccess){
-
-        }else{
-
-        }
-
         inProgress = false;
         update();
         return true;
-      } else {
-
+      } else if (response.statusCode == 422) {
         Get.snackbar(
-            response.responseData["message"].toString(), "Try again", backgroundColor: Colors.red,
-            colorText: Colors.white);
+            "The selected email is invalid", "Try with an registered email",
+            backgroundColor: Colors.red, colorText: Colors.white);
+        inProgress = false;
+        update();
+        return false;
+      } else {
+        Get.snackbar(response.responseData["message"].toString(), "Try again",
+            backgroundColor: Colors.red, colorText: Colors.white);
         inProgress = false;
         update();
         return false;
       }
-    }catch(e){
+    } catch (e) {
       log(e.toString());
-      Get.snackbar('Something went wrong!',e.toString(),backgroundColor: Colors.red,colorText: Colors.white);
+      Get.snackbar('Something went wrong!', e.toString(),
+          backgroundColor: Colors.red, colorText: Colors.white);
       inProgress = false;
       update();
       return false;
     }
-
-
   }
-
 }

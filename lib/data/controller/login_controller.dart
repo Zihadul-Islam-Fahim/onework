@@ -30,7 +30,7 @@ class LoginController extends GetxController{
          userModel = UserModel.fromJson(userResponse.responseData);
        }else{}
 
-       AuthController().saveUserInformation(token, userModel);
+       await AuthController().saveUserInformation(token, userModel);
 
 
        inProgress= false;

@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:onework2/data/controller/signup_controller.dart';
 import 'package:onework2/ui/screens/greeting_screen.dart';
 
+import '../../../data/controller/chat_controller.dart';
+
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
 
@@ -146,6 +148,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                           _phoneTEController.text,
                                           _passwordTEController.text);
                                       if (result) {
+                                        Get.find<ChatController>().getMsg();
                                         Get.to(() => const GreetingScreen());
                                       }
                                     }

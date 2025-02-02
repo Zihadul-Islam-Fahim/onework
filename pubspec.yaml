@@ -36,12 +36,12 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   get: ^4.6.6
-  carousel_slider: ^4.2.1
+  carousel_slider: ^5.0.0
   file_picker: ^8.0.0+1
   http: ^1.1.0
   shared_preferences: ^2.2.2
   pin_code_fields: ^8.0.1
-  pusher_channels_flutter: ^2.2.1
+  pusher_channels_flutter:
 #  pusher_client: ^2.0.0
 #  dart_pusher_channels: ^1.2.2+1
 #  pusher_channels: ^0.6.0

@@ -21,7 +21,7 @@ class _BusinessAreaScreenState extends State<BusinessAreaScreen> {
 
   @override
   void initState() {
-    cateController.getCategory("businesses");
+    cateController.getCategory("enterprises");
     super.initState();
   }
 

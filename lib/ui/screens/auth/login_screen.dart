@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:onework2/data/controller/inbox_controller.dart';
 import 'package:onework2/ui/screens/auth/signup_screen.dart';
 
 
@@ -149,7 +150,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                           _passwordTEControlller.text);
                                       if (result) {
 
-                                        Get.find<ChatController>().getMsg();
+                                        Get.find<InboxController>().lastMsg = "Get Support";
+                                       await Get.find<ChatController>().getMsg();
+
 
                                         Get.to(() => const GreetingScreen());
                                       }

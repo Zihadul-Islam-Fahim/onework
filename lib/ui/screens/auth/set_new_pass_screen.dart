@@ -37,12 +37,12 @@ class _SetNewPassScreenState extends State<SetNewPassScreen> {
                 child: Container(
                   width: double.infinity,
                   padding:
-                  const EdgeInsets.symmetric(vertical: 35, horizontal: 14),
+                      const EdgeInsets.symmetric(vertical: 35, horizontal: 14),
                   decoration: const BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.vertical(
-                        top: Radius.circular(40), )
-                  ),
+                        top: Radius.circular(40),
+                      )),
                   child: Form(
                     key: _formKey,
                     child: SingleChildScrollView(
@@ -60,18 +60,16 @@ class _SetNewPassScreenState extends State<SetNewPassScreen> {
                           SizedBox(
                             height: size.height * 0.01,
                           ),
-                           const Text(
+                          const Text(
                             "Enter otp code",
                             style: TextStyle(
                                 fontSize: 16,
-
                                 fontFamily: 'poppins',
                                 color: Colors.grey),
                           ),
                           SizedBox(
                             height: size.height * 0.02,
                           ),
-
                           PinCodeTextField(
                             appContext: context,
                             length: 5,
@@ -89,9 +87,9 @@ class _SetNewPassScreenState extends State<SetNewPassScreen> {
                                 selectedFillColor: Colors.orange.shade200,
                                 inactiveFillColor: Colors.white,
                                 inactiveColor: Colors.black,
-                                selectedColor: Colors.black
-                            ),
-                            animationDuration: const Duration(milliseconds: 200),
+                                selectedColor: Colors.black),
+                            animationDuration:
+                                const Duration(milliseconds: 200),
                             backgroundColor: Colors.transparent,
                             enableActiveFill: true,
                             onChanged: (value) {
@@ -101,18 +99,13 @@ class _SetNewPassScreenState extends State<SetNewPassScreen> {
                           SizedBox(
                             height: size.height * 0.02,
                           ),
-
                           const Text(
                             "Enter new password",
                             style: TextStyle(
                                 fontSize: 16,
-
                                 fontFamily: 'poppins',
                                 color: Colors.grey),
                           ),
-
-
-
                           SizedBox(
                             height: size.height * 0.02,
                           ),
@@ -126,11 +119,12 @@ class _SetNewPassScreenState extends State<SetNewPassScreen> {
                               return null;
                             },
                             decoration:
-                            const InputDecoration(hintText: 'New Password'),
+                                const InputDecoration(hintText: 'New Password'),
                           ),
                           SizedBox(
                             height: size.height * 0.015,
-                          ),TextFormField(
+                          ),
+                          TextFormField(
                             controller: _cPassController,
                             keyboardType: TextInputType.emailAddress,
                             validator: (String? v) {
@@ -139,61 +133,71 @@ class _SetNewPassScreenState extends State<SetNewPassScreen> {
                               }
                               return null;
                             },
-                            decoration:
-                            const InputDecoration(hintText: 'Confirm Password'),
+                            decoration: const InputDecoration(
+                                hintText: 'Confirm Password'),
                           ),
                           SizedBox(
                             height: size.height * 0.015,
                           ),
-
                           SizedBox(
                             height: size.height * 0.02,
                           ),
                           GetBuilder<SetNewPassController>(
                               builder: (controller) {
-                                return SizedBox(
-                                  height: size.height * 0.06,
-                                  width: double.infinity,
-                                  child: Visibility(
-                                    visible: controller.inProgress==false,
-                                    replacement:  Center(child: CircularProgressIndicator(color: Colors.orange.shade200),),
-                                    child: ElevatedButton(
-                                      onPressed: () async {
-                                        if(_formKey.currentState!.validate() && pinNumber != "0"){
-                                          if(_newPassController.text == _cPassController.text){
-                                            final res = await controller.setNewPass(pinNumber, _newPassController.text, _cPassController.text);
+                            return SizedBox(
+                              height: size.height * 0.06,
+                              width: double.infinity,
+                              child: Visibility(
+                                visible: controller.inProgress == false,
+                                replacement: Center(
+                                  child: CircularProgressIndicator(
+                                      color: Colors.orange.shade200),
+                                ),
+                                child: ElevatedButton(
+                                  onPressed: () async {
+                                    if (_formKey.currentState!.validate() &&
+                                        pinNumber != "0") {
+                                      if (_newPassController.text.length > 7) {
+                                        if (_newPassController.text ==
+                                            _cPassController.text) {
+                                          final res =
+                                              await controller.setNewPass(
+                                                  pinNumber,
+                                                  _newPassController.text,
+                                                  _cPassController.text);
 
-                                            if(res){
-                                              Get.to(()=> const LoginScreen());
-                                              mySnackbar(context, "Your Password has been changed.");
-                                            }
-
-
-
-                                          }else{
-                                            mySnackbar(context, "Password didn't match.",true);
+                                          if (res) {
+                                            Get.to(() => const LoginScreen());
+                                            mySnackbar(context,
+                                                "Your Password has been changed.");
                                           }
-
-
-                                        }else{
-                                          mySnackbar(context, "Enter OTp",true);
+                                        } else {
+                                          mySnackbar(context,
+                                              "Password didn't match.", true);
                                         }
-
-                                      },
-                                      child: const Text(
-                                        'Change Password',
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          color: Colors.black,
-                                          fontFamily: 'poppins',
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
+                                      } else {
+                                        mySnackbar(
+                                            context,
+                                            "Password must be 8 character or more",
+                                            true);
+                                      }
+                                    } else {
+                                      mySnackbar(context, "Enter OTP", true);
+                                    }
+                                  },
+                                  child: const Text(
+                                    'Change Password',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.black,
+                                      fontFamily: 'poppins',
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                );
-                              }
-                          ),
+                                ),
+                              ),
+                            );
+                          }),
                           SizedBox(
                             height: size.height * 0.01,
                           ),

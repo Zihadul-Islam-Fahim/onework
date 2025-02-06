@@ -23,6 +23,8 @@ class _ApplyScreenState extends State<ApplyScreen> {
   final TextEditingController _aboutProjectTEController =
       TextEditingController();
 
+  final cateController = Get.find<CategoryController>();
+
   @override
   void initState() {
     Get.find<CategoryController>().getCategory("candidates");
@@ -230,9 +232,8 @@ class _ApplyScreenState extends State<ApplyScreen> {
                               child: ElevatedButton(
                                 onPressed: () async {
                                   if (_formKey.currentState!.validate() &&
-                                      controller.file != null &&
-                                      Get.find<CategoryController>().currentValue!.name !=
-                                          'What type of contract are you interested in?') {
+                                      controller.file != null && cateController.currentValue != cateController.categoryModel.categoryList!.first
+                                      ) {
 
                                     bool result = await controller.sendInfo(
                                        name:  _nameTEController.text.trim(),

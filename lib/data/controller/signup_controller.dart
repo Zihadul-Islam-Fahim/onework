@@ -34,7 +34,7 @@ class SignupController extends GetxController{
         final NetworkResponse userResponse = await NetworkCaller().getRequest(Urls.user,token: token);
         if(userResponse.isSuccess){
           userModel = UserModel.fromJson(userResponse.responseData);
-          AuthController().saveUserInformation(token, userModel);
+         await AuthController().saveUserInformation(token, userModel);
         }else{
 
         }

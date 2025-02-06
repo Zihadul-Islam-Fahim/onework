@@ -148,7 +148,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                           _phoneTEController.text,
                                           _passwordTEController.text);
                                       if (result) {
-                                        Get.find<ChatController>().getMsg();
+                                       await Get.find<ChatController>().getMsg();
                                         Get.to(() => const GreetingScreen());
                                       }
                                     }

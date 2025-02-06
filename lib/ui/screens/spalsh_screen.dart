@@ -39,11 +39,11 @@ class _SplashScreenState extends State<SplashScreen> {
   init() async {
 
 
-    Future.delayed(const Duration(milliseconds: 1500)).then((value) async {
+    Future.delayed(const Duration(milliseconds: 1000)).then((value) async {
         bool res = await AuthController().checkAuthState();
        if(res){
-         Get.find<ChatController>().getMsg();
-       }
+         await Get.find<ChatController>().getMsg();
+       }else{}
 
       log(AuthController.token.toString());
       Get.offAll(() =>  const BottomNavScreen());

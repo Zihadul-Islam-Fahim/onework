@@ -14,17 +14,18 @@ class _OurJobScreenState extends State<OurJobScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+     // backgroundColor: Colors.black,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(12.0),
             child: Column(
               children: [
-                Text(
+                const Text(
                   'Onework professions in mass distribution',
                   textAlign: TextAlign.start,
-                  style: Theme.of(context).textTheme.titleLarge,
+                  style: TextStyle(fontSize: 21,fontWeight: FontWeight.bold,color: Colors.black),
+
                 ),
                 SizedBox(
                   height: Get.height * 0.02,

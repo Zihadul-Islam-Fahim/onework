@@ -6,6 +6,7 @@ import 'package:onework2/data/models/network_response.dart';
 import 'package:onework2/data/services/network_caller.dart';
 import 'package:onework2/data/utilities/urls.dart';
 
+import '../../ui/screens/auth/login_screen.dart';
 import '../models/userModel.dart';
 import 'auth_controller.dart';
 
@@ -36,7 +37,8 @@ class SignupController extends GetxController{
           userModel = UserModel.fromJson(userResponse.responseData);
          await AuthController().saveUserInformation(token, userModel);
         }else{
-
+          Get.to(()=> const LoginScreen());
+          log("failed to fatch user data");
         }
 
         inProgress = false;

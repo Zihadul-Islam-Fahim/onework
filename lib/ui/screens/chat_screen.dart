@@ -26,7 +26,6 @@ class _ChatScreenState extends State<ChatScreen> {
   void initState() {
     super.initState();
 
-
     WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
 
     chatController.checkerPusherStatus();
@@ -87,15 +86,21 @@ class _ChatScreenState extends State<ChatScreen> {
       backgroundColor: Colors.grey.shade200,
       appBar: AppBar(
         leading: IconButton(
-          padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             splashRadius: 25,
-
             onPressed: () {
               Get.back();
             },
             icon: const Icon(Icons.arrow_back_outlined)),
         leadingWidth: 35,
-        backgroundColor: Colors.amberAccent,
+        backgroundColor: Colors.black54,
+        actions: [
+          IconButton(
+              onPressed: () {
+                _scrollToBottom();
+              },
+              icon: const Icon(Icons.arrow_downward))
+        ],
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -110,7 +115,7 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
             const SizedBox(width: 10),
             const Text('Onework Support',
-                style: TextStyle(fontSize: 16, color: Colors.black)),
+                style: TextStyle(fontSize: 16, color: Colors.white)),
           ],
         ),
       ),
@@ -213,7 +218,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           onTap: _sendMessage,
                           child: const CircleAvatar(
                             radius: 24,
-                            backgroundColor: Colors.amberAccent,
+                            backgroundColor: Colors.black54,
                             child: Icon(
                               Icons.send,
                               color: Colors.white,
@@ -237,7 +242,7 @@ class _ChatScreenState extends State<ChatScreen> {
       margin: const EdgeInsets.symmetric(vertical: 4),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: isUser ? Colors.amberAccent : Colors.white,
+        color: isUser ? Colors.black54 : Colors.white,
         borderRadius: BorderRadius.only(
           topLeft: const Radius.circular(12),
           topRight: const Radius.circular(12),
@@ -251,26 +256,23 @@ class _ChatScreenState extends State<ChatScreen> {
       child: Text(
         chatController.msgList[index].message!,
         style: TextStyle(
-            fontSize: 14, color: isUser ? Colors.black : Colors.black87),
+            fontSize: 14, color: isUser ? Colors.white : Colors.black87),
       ),
     );
   }
 
   Container _hasImage(bool isUser, int index) {
-
     bool hasText = chatController.msgList[index].message != null;
 
     return hasText ? _imageAndText(isUser, index) : _imageOnly(isUser, index);
   }
-
-
 
   Container _imageOnly(bool isUser, int index) {
     return Container(
         margin: const EdgeInsets.symmetric(vertical: 4),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
-          color: isUser ? Colors.amberAccent : Colors.white,
+          color: isUser ? Colors.black54 : Colors.white,
           borderRadius: BorderRadius.only(
             topLeft: const Radius.circular(12),
             topRight: const Radius.circular(12),
@@ -282,8 +284,10 @@ class _ChatScreenState extends State<ChatScreen> {
           ],
         ),
         child: InkWell(
-          onTap: (){
-            Get.to(()=> FullImageScreen(image: "https://onewk.appsowk.org${chatController.msgList[index].file!}"));
+          onTap: () {
+            Get.to(() => FullImageScreen(
+                image:
+                    "https://onewk.appsowk.org${chatController.msgList[index].file!}"));
           },
           child: FadeInImage(
             fit: BoxFit.cover,
@@ -308,7 +312,7 @@ class _ChatScreenState extends State<ChatScreen> {
         margin: const EdgeInsets.symmetric(vertical: 4),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
-          color: isUser ? Colors.amberAccent : Colors.white,
+          color: isUser ? Colors.black54 : Colors.white,
           borderRadius: BorderRadius.only(
             topLeft: const Radius.circular(12),
             topRight: const Radius.circular(12),
@@ -323,8 +327,10 @@ class _ChatScreenState extends State<ChatScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             InkWell(
-              onTap: (){
-                Get.to(()=> FullImageScreen(image: "https://onewk.appsowk.org${chatController.msgList[index].file!}"));
+              onTap: () {
+                Get.to(() => FullImageScreen(
+                    image:
+                        "https://onewk.appsowk.org${chatController.msgList[index].file!}"));
               },
               child: FadeInImage(
                 fit: BoxFit.cover,
@@ -342,17 +348,17 @@ class _ChatScreenState extends State<ChatScreen> {
                 },
               ),
 
-
               // Image.network(
               //     "https://onewk.appsowk.org${chatController.msgList[index].file!}"),
             ),
-            const SizedBox(height: 4,),
+            const SizedBox(
+              height: 4,
+            ),
             Text(
               chatController.msgList[index].message!,
               style: TextStyle(
                   fontSize: 14, color: isUser ? Colors.black : Colors.black87),
             )
-
           ],
         ));
   }

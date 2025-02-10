@@ -23,7 +23,7 @@ try{
     final NetworkResponse response = await NetworkCaller().postRequest(Urls.contact,body: inputParams);
     if(response.isSuccess){
 
-      Get.snackbar('Success',response.responseData["message"],backgroundColor: Colors.green,colorText: Colors.white);
+      Get.snackbar('Success',"Contact information sent",backgroundColor: Colors.green,colorText: Colors.white);
       inProgress= false;
       update();
       return true;

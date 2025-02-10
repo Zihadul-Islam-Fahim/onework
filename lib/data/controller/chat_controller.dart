@@ -72,18 +72,19 @@ class ChatController extends GetxController{
      msgList.add(MessageModel.fromJson(p));
    }
 
-    msgList =  msgList.reversed.toList();
-
-   inboxController.lastMsgChanged(msgList.last.message ?? "Photo");
-
-
-
-   if(msgList.last.type == 'admin'){
-     inboxController.newMsg(false);
+   if(msgList.isEmpty){
 
    }else{
-     inboxController.msgByUser(true);
-     inboxController.newMsg(true);
+     msgList =  msgList.reversed.toList();
+     inboxController.lastMsgChanged(msgList.last.message ?? "Photo");
+
+     if(msgList.last.type == 'admin'){
+       inboxController.newMsg(false);
+
+     }else{
+       inboxController.msgByUser(true);
+       inboxController.newMsg(true);
+     }
    }
 
 
